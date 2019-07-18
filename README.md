@@ -9,7 +9,7 @@ Die HTL, unendliche Schmachen. Wir schreiben das Jahr 2019.
  einen eine Wirbelstrommessung mit einem Elektromotorprüfstand durchzuführen, 
  neue Probleme und neue Erschwernisse zu überwinden. 
 
- Mit den Gedanken viele Lichtjahre von der Erde entfernt dringt die 
+ Mit ihren Gedanken viele Lichtjahre von der Erde entfernt dringt die 
  Diplomarbeitsgruppe in Schmachen vor, die nie ein Mensch zuvor gesehn hat.
 
  . . .
