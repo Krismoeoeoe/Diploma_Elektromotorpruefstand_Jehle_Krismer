@@ -1,5 +1,5 @@
 Zielsetzung:
-Ziel ist es eine Messanlage für einen Motorprüfstand zu bauen, welcher den Wirkungsgrad 
+Ziel ist es eine Messanlage fÃ¼r einen MotorprÃ¼fstand zu bauen, welcher den Wirkungsgrad 
 bei verschiedenen Drehzahlen und Belastungen misst. Die Ergebnisse werden von einem Arduino 
 verarbeitet und an einen Raspberry Pi geschickt, welcher sie in einer Datenbank speichert.
 
@@ -7,15 +7,6 @@ Eine Messanlage ist zwar schon vorhanden,jedoch erzielt diese nichtzureichend ge
 Messergebnisse.
 
 
-Geplantes Ergebnis der Prüfungskandidatin/des Prüfungskandidaten:
-Es soll eine möglichst fehlerfreie Wirkungsgradmessung eines Elektromotors möglich sein und die 
+Geplantes Ergebnis der PrÃ¼fungskandidatin/des PrÃ¼fungskandidaten:
+Es soll eine mÃ¶glichst fehlerfreie Wirkungsgradmessung eines Elektromotors mÃ¶glich sein und die 
 Ergebnisse in einer Datenbank auf einem Raspberry Pi gespeichert werden. 
-
-
-Meilensteine:
-
-1. Meilenstein: 24. September 2019 	-	 
-2.Meilenstein: 15. Oktober 2019 	-	
-3.Meilenstein: 29. November 2019 	-	
-4.Meilenstein: 15. Jänner 2020 		-	
-5.Meilenstein: 28. Februar 2020 	-	
