@@ -1,0 +1,28 @@
+Strommessung Leitung zum Motor:		Amperemesszange mit Hallsensor (Hallsensor für DC)
+
+^
+|
+|	|
+|	|_______
+|	|	|
+|_______|_______|_______>
+
+
+Signal in 1000 Abschnitte teilen -> in kleinen Abschnitten ändert sich Wert nicht -> "DC-teil"
+
+1000 mal U*I = P -> 1000 Leitungen für Signal -> Mittelwert machen (TP ist auch ein Mittelewertbilder) -> ist dann der Wert an unserem Messpunkt
+
+...
+
+Alles 2 MAL machen: einmal DC-Motor Zuleitung und einmal bei Wirbelstrombremse (die Werte müssen noch in Spannungen umgewandelt werden)
+
+...
+
+
+Steilheitsmultiplizierer: (halbe Gilbertzelle)
+(Brauchen vielleicht ganze Gilbertzelle)
+
+
+Wichtig:
+Earlyspannung
+Steilheitsmultiplizierer -> Analogmultiplizierer bzw. Gilbertzelle
