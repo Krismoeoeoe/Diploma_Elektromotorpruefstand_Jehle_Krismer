@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\geometry{a4paper, total={170mm,257mm}, left=2cm, right=2cm, top=2cm, bottom=2cm}
+\usepackage{xcolor}
+\usepackage[	colorlinks=true, 	urlcolor=blue, linkcolor=green ]{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./home/patrick/Desktop/DA_Jehle_Krismer_Motor/DA_Anfrage/DA_Anfrage_Krismer_Jehle_4BHEL_v2/} }
+\title{\textbf{\LARGE{DA-Antrag}}}
+\author{Patrick Krismer, Simon Jehle}
+
+\begin{document}
+	\maketitle 
+***\\
+Wir haben ein  Github Repository für die Diplomarbeit:\\
+ 	\url{https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer}. \\
+	Da sind alle Bilder vom Pruefstand und die vorherige Diplomarbeit (als PDFs) drauf.\\
+\begin{itemize}
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=2.2]{Pruefstandplan_1.png}\\
+	\textit{ Pruefstandplan 1 } konstruiert von Simon Jehle (supertyp)
+\end{figure}
+
+
+
+
+\subsection*{Ausgangslage bzw. Aufgabenstellung}
+\item[•]ALT:\\
+Für einen Elektromotorprüfstand in der HTL, von FISCHER Christian, DI (FS), wird eine möglichst fehlerfreie Steuerung gebaut. Bei dieser Steuerung sollen die Wirkungsgradmessserien weitgehend automatisiert sein, die Messergebnisse in einer Datenbank gespeichert und grafisch dargestellt werden.  \\
+Gemessen werden die Wirkungsgrade eines 'Dualsky XM6360EA-10' bürstenlosen-Elektromotors bei verschiedenen Drehzahlen und Belastungsstufen. 
+Diese Belastungsstufen werden durch eine \textbf{Magnetbremse} simuliert. \\ 
+Die Bremse basiert auf dem Prinzip der magnetischen Hysterese. \\
+Der Wirkungsgrad des Motors ist P-out / P-in\\
+
+\item[•]NEU:\\
+\textit{Für einen Elektromotorprüfstand in der HTL, von FISCHER Christian, DI wird eine möglichst fehlerfreie Steuerung gebaut. 
+Gemessen werden die Wirkungsgrade eines 'Dualsky XM6360EA-10' bürstenlosen-Elektromotors bei verschiedenen Drehzahlen und Belastungsstufen. 
+Die Messergebnisse in einer Datenbank gespeichert und grafisch dargestellt.
+Diese Belastungsstufen werden durch eine Magnetbremse, basierend auf dem Prinzip der magnetischen Hysterese simuliert.\\
+Des NEUE: 454 Zeichen - - immer noch zu lang :( }\\\\
+
+
+
+\item[•] Durch eine Tiefpassschaltung wird eine Mittelwertbildung an der Spannungsversorgung erreicht, die sonst durch ihre nichtlinearität das Messergebnis vefälscht\\
+
+\textit{// Sollen wir jetzt für die 110 A  LithiumBatterien oder doch netzgeräte nehmen?}\\
+
+\item[•]Damit der Elektromotor nicht beschädigt wird schaltet der Raspberry Pi automatisch den Motor aus, sobald seine Belastung bzw. die Eingangsleistung einen kritischen Wert überschreitet.\\\\         %in einen kritischen Bereich kommt
+
+\textit{//Die Automatische Verstellung des Bremssattels lassen wir im Antrag weg.\\
+//Motorstrom und -Temperaturschutz lassen wir im Antrag weg.\\ 
+//Falls noch Zeit bleibt, machen wir das dazu. (Falls keine Zeit -> habens es nicht im Antrag erwähnt)\\}
+
+ %\begin{figure}
+% \includegraphics[scale=1]{DA_Formeln.png} 
+ %\caption{\textit{//Sollen wir die Formeln auch in den DA-Antrag schreiben? Oder gehören die erst dann in die Dokumentation (da müssen wir sie sowieso rein schreiben.)}}
+%\end{figure}
+
+\newpage
+\subsection*{Zielsetzung:}
+Ziel ist es eine Messanlage für einen Motorprüfstand zu bauen, welcher den Wirkungsgrad 
+bei verschiedenen Drehzahlen und Belastungen misst. Die Ergebnisse werden von einem Arduino 
+verarbeitet und an einen Raspberry Pi geschickt, welcher sie in einer Datenbank speichert.\\\\\\
+
+
+
+\subsection*{Geplantes Ergebnis:}
+Geplantes Ergebnis der Prüfungskandidatin/des Prüfungskandidaten:\\
+Es soll eine möglichst fehlerfreie Wirkungsgradmessung eines Elektromotors möglich sein und die 
+Ergebnisse in einer Datenbank auf einem Raspberry Pi gespeichert werden.\\\\
+
+
+\subsection*{Rechtlichen Regelungen:}
+Keine Rechtlichen Regelungen, außer die, die für die HTBLVA Anichstraße gelten.\\
+Kontaktperson:  FISCHER Christian (FS), DI\\
+
+
+\newpage
+\subsection*{Arbeitsaufwand:}
+\textbf{Simon Jehle, 4BHEL: 180 Stunden}\\
+Zeitplanung, Programmierung Arduino (Datenverarbeitung), Programmierung Raspberry Pi (Datenbank, Messsteuerung)\\
+Kommunikation zwischen den beiden Embedded Systems\\
+
+\textbf{Patrick Krismer, 4BHEL: 180 Stunden }\\
+Zeitplanung, Dokumentation, Präsentation\\
+Leistungsberechnungen, Messschaltungen (Tiefpassschaltung (mit Reset, Entladung des Kondensators)), Kommunikation Arduino-Waage\\\\
+
+
+\subsection*{Meilensteine:} 
+\begin{tabular}{| l | l |}
+\hline
+\textbf{1. Meilenstein: } & \textbf{24. September 2019} \\ \hline & \\
+Jehle & Arduino Programmierung  für Messergebnisse der Sensoren \\
+            & (Umdrehungszahl, Drehmoment, Leistungen) \\ & \\
+Krismer & Leistungsberechnungen, Filter-Tiefpassschaltung \\ & \\ \hline 
+
+
+\textbf{2. Meilenstein: } & \textbf{04. November  2019} \\ \hline & \\
+ Jehle & Programmierung Raspberry Pi (Datenbank) \\ & \\
+Krismer & Schaltungslayout Simulation \\ 
+	   		  & Schaltungsaufbau (Platinenfertigung) .................................. \\ & \\ \hline 
+
+
+\textbf{3. Meilenstein: } & \textbf{16. Dezember 2019} \\ \hline & \\
+Jehle & Programmierung der Kommunikation zwischen \\
+           & den beiden Embedded Systems \\ & \\
+Krismer &  Notausschaltung mittels Komparator .................................. \\& \\ \hline 									%Schaltungsaufbau Testen 
+
+\textbf{4. Meilenstein: } & \textbf{24. Februar 2020} \\ \hline & \\
+Jehle & Programmierung Raspberry Pi (automatisierte Messsteuerung) \\ & \\
+Krismer & Programmierung der Kommunikation zwischen Arduino - Waage \\
+                 & \\ \hline 
+
+
+\textbf{5. Meilenstein: } & \textbf{23. März 2020} \\ \hline & \\
+Jehle & .................................. \\ & \\
+Krismer & Dokumentation fertig stellen, Präsentation fertig stellen\\ & \\ \hline
+\end{tabular} 
+
+
+
+
+
+
+\newpage
+\subsection*{Voraussichtliches Equippment}
+ \item[-]Arduino Leonardo / Mega (wegen mehr Interrupts als UNO (ATMega32u4)) 
+ \item[-]Raspberry Pi (Ziemlich egal, muss nit Heizer Version 4 sein) 
+ \item[-]SD Karte für RPi (Plus Sachen für Verbindung zu vllt. Auswertungs-PC) 
+ \item[-]AD633 Multiplizierer 
+ \item[-]CP1100 Stromzange (müsste FS noch haben),  
+ \item[-]Bauteile für TP (Widerstände, Kondensatoren, Transistoren),  
+ \item[-]10S LiPo (Fischer hat von 10S LiPo geredet),  
+ \item[-]IGBT oder Solid-State-Relais (LiPo zu Controller Verbindung),  
+ \item[-]RS232 zu Serial Converter   (von "Kern Präzisionswaage 440-51N" zum  Arduino zum Drehmoment messen), 
+ \item[-] 5V Netzteil, 
+ \item[-] Komparator (Notausschaltung), 
+ \item[-]Kabel, Verbindungen, Widerstände (Pulldown), usw. 
+ 
+\subsection*{Verwendete Embedded Systems:}
+\textit{Also, die Messung startet sobald Arduino und Raspi gestartet sind und der Motor Strom hat. \\
+				Wenn die Grafik dann generiert ist, soll die Messung dann aufhören oder noch weiter laufen für eine weitere Messung?}
+\item[-]\textbf{Arduino (-Mega):}\\
+verarbeitet die Messergebnisse der Sensoren bzw. direkt am Arduino anliegende Signale \\
+und gibt sie dann an den Raspberry Pi weiter.\\
+Aus der Datenbank wird anschließend eine Grafik erstellt, die den Wirkungsgrad bei verschiedenen Drehzahlen darstellt.\\\\ 
+
+\item[-]\textbf{Raspberry Pi (-3-B):}\\
+Er betreibt eine Datenbank in der die Messergebnisse gespeichert werden.\\
+
+
+\end{itemize}
+\end{document}
