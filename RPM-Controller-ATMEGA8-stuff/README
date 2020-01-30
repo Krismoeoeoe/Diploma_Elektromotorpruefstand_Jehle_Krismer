@@ -1,1 +1,3 @@
 This is ATMEGA8 RPM-Controller shit
+27.01.20 - Doesn't work, piece of .....
+30.01.20 - Does work! URSEL bit gotta be set cause of ATmega8 problem with UCSRC and UBBRH having the same I/O Address for some reason
