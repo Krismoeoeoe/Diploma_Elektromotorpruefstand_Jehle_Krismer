@@ -1,3 +1,5 @@
 This is ATMEGA8 RPM-Controller shit
-27.01.20 - Doesn't work, piece of .....
-30.01.20 - Does work! URSEL bit gotta be set cause of ATmega8 problem with UCSRC and UBBRH having the same I/O Address for some reason
+27.01.20 - ATMEGA8-RPM-Controller-V1.c - Doesn't work, piece of .....
+30.01.20 - ATMEGA8-RPM-Controller-V2.c - Does work! URSEL bit gotta be set cause of ATmega8 problem with UCSRC and UBBRH
+                                         having the same I/O address for some reason. This code returns the received stuff btw.
+           ATMEGA8-RPM-Controller-V3.c - Without the returning stuff that is received
