@@ -1,0 +1,2 @@
+090220: made this folder, created rxData_V3
+        rxData_v3: Gets the results from arduino and puts it into variables. Now to filehandling stuff
