@@ -1,6 +1,6 @@
 // author: thetoastiestbread
 // date: 18.02.20
-// filename: PutStuffINtoFilesforPHP_V2.c
+// filename: PutStuffIntoFilesforPHP_V2.c
 // desc: Never closes the file :/
 
 #include <stdio.h>
