@@ -1,0 +1,5 @@
+18.2.20:
+V1: simple file opening writing something to it
+V2: Creates/Opens file, writes its stuff into it, reads one char out of it. But it never closes it itself
+19.2.20:
+V3: Basically V2 but File is opened and closed when anything is done with it.
