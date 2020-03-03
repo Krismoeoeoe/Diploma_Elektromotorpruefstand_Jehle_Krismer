@@ -1,0 +1,102 @@
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!--Website 7LPP
+    Date: 03.03.2020
+    Sources:
+        https://coolors.co/ffae75-b9f248-6600cc-e6e6ea-f4f4f8
+        https://brightside.me/article/the-ultimate-color-combinations-cheat-sheet-92405/
+        https://www.w3schools.com/cssref/css_websafe_fonts.asp   
+        https://www.w3schools.com/csS/css_positioning.asp
+        https://stackoverflow.com/questions/18340057/how-to-display-two-buttons-beside-each-other
+        https://www.w3schools.com/howto/howto_css_button_group.asp
+
+
+
+
+
+-->
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!DOCTYPE html>
+<!------------------------------------------------------------------------------------>
+<style>
+.heading1{
+    color: #4c0099;
+    font-family: Arial Black , sans-serif;
+    font-size: 40px;
+    text-align: center;  
+}
+
+.heading3{
+    color: #4c0099;
+    font-family: Arial Black , sans-serif;
+}
+
+.funheading{
+    color: #4c0099;
+    font-family: Comic Sans MS, cursive, sans-serif;
+    font-size: 50px;
+    text-align: center;  
+}
+
+.button {
+    background-color: #4c0099;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.button_grey {
+    background-color: #aeaeb2;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #6600cc;
+    color: white;
+}
+
+div.relativ{
+    position: relative;
+    left: 30px;
+}
+
+</style>
+<!------------------------------------------------------------------------------------>
+<header>
+    <body bgcolor="#b9f248">
+        <h1 class="heading1"> Bedienung des Elekromotor-Prüfstandes</h1>
+        <h3 class="heading3"> -- Um den Vorgang zu starten, drücken sie [Start]</h4>
+        <h3 class="heading3"> -- Um den Vorgang abzubrechen, drücken sie [Abbruch]</h4>
+        <h3 class="heading3"> -- Um die Drehzahl mit dem Potentiometer einzustellen, drücken Sie [Freerunnung]</h4>
+          <br>
+          <br>
+<!------------------------------------------------------------------------------------>
+        <form action="/action_page.php">
+            <div class="btn-group" style="width: 100%">
+                <button style="width: 25%" class="button"> Start ze Messung</button>
+                <button style="width: 25%" class="button"> Stop ze Messung</button>
+                <button style="width: 40%" class="button"> Start ze Motor [Free- control via ze Potentiometer]</button>
+            </div>
+        </form>
+<!------------------------------------------------------------------------------------>
+    </body>
+</header>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
