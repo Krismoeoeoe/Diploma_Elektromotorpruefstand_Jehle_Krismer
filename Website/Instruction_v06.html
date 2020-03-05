@@ -1,0 +1,248 @@
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!--Website 
+    Author: 7LPP
+    Date: 03.03.2020
+    https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer
+
+    Sources:
+        https://coolors.co/ffae75-b9f248-6600cc-e6e6ea-f4f4f8
+        https://brightside.me/article/the-ultimate-color-combinations-cheat-sheet-92405/
+        https://www.w3schools.com/cssref/css_websafe_fonts.asp   
+        https://www.w3schools.com/csS/css_positioning.asp
+        
+        https://stackoverflow.com/questions/18340057/how-to-display-two-buttons-beside-each-other
+        https://www.w3schools.com/howto/howto_css_button_group.asp
+
+        https://www.w3schools.com/CSSref/css3_pr_background-clip.asp
+
+        https://www.w3schools.com/cssref/pr_tab_table-layout.asp
+        https://www.w3schools.com/Css/tryit.asp?filename=trycss_ex_images_thumbnail_link
+
+        https://www.w3schools.com/Tags/att_img_align.asp
+        https://www.w3schools.com/css/css_float.asp
+        https://www.w3schools.com/Css/css_boxmodel.asp
+        https://www.mediaevent.de/tutorial/css-position-absolute-relative.html
+
+
+-->
+<!------------------------------------------------------------------------------------>
+<!DOCTYPE html>
+<!------------------------------------------------------------------------------------>
+<!--html, body{
+    margin: 0;
+}-->
+<style>
+.heading1{
+    background-color: #4c0099;
+    color: #88cc00;
+    font-family: Arial Black, sans-serif;
+    font-size: 40px;
+    text-align: center; 
+    padding: 20px; 
+    margin: -8px;
+
+}
+
+.heading3{
+    color: #4c0099;
+    font-family: Arial Black, sans-serif;
+}
+
+.thanks{
+    color: #4c0099;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+}
+
+.button {
+    background-color: #4c0099;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.button_2 {
+    background-color: #4c0099;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+.button_grey {
+    background-color: #aeaeb2;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #6600cc;
+    color: white;
+}
+
+.pos_abs{
+    position: absolute;
+    left: 30px;
+
+}
+
+table{
+    color: #4c0099;
+    border-collapse: collapse;
+    border: 4px solid #4c0099;
+    width: 20%;
+}
+th,td {
+    border: 2px solid #4c0099;
+}
+
+.footer{
+    background-color: #4c0099;
+    color: white;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: -8px;
+    
+}
+
+.imagegit{
+    position: relative;
+    float: right;
+    width: 60px;
+    transition-duration: 0.4s;
+}
+.imagegit:hover{
+    opacity: 0.5;
+}
+
+.image1{
+    position: relative;
+    float: center;
+    width: 45%;
+}
+
+.imagehome{
+    position: relative;
+    float: left;
+    width: 60px;
+    transition-duration: 0.4s
+
+}
+.imagehome:hover{
+    opacity: 0.85;
+}
+
+figcaption{
+    position: relative;
+    float: initial;
+    color: #4c0099;
+    font-family: Arial Black, sans-serif;
+    align-content: center;
+}
+
+</style>
+<!------------------------------------------------------------------------------------>
+<header>
+    <title>Ikea is Life</title>
+        <h1 class="heading1"> Anleitung zur Bedienung des Elektromotor-Prüfstandes</h1><br>
+            <figure>
+                <a target="_self" href="file:///home/patrick/Desktop/School/Diplomarbeit/MS4_Automatisierung/Website_plus_Instruction/Website_withAjax_v06.html">
+                <img src="pics/violet_home_4c0099.png" class="imagehome" ></a><br><br>
+                <figcaption hspace="5px"><h4>Home</h4></figcaption>
+                    <h3 class="thanks"> Thank you for choosing our Elektromotor-Prüfstandes.<br> 
+                        Here you'll find all the infos you need to make the measurement. </h4>
+                
+                
+            </figure>
+
+    <br><br>
+<!------------------------------------------------------------------------------------>
+    <body bgcolor="#b9f248">
+
+            <br><br>
+        <h3 class="heading3"> -- Um den Vorgang zu starten, drücken sie [Start]</h4>
+        <h3 class="heading3"> -- Um den Vorgang abzubrechen, drücken sie [Abbruch]</h4>
+        <h3 class="heading3"> -- Um die Drehzahl mit dem Potentiometer einzustellen, drücken Sie [Freerunnung]</h4>
+            <br><br>
+            
+            <div>
+                <img src="pics/Eevee.jpg" class="image1" alt="Eevee" > <br>
+                <h3 class="heading3">This is an Eevee.</h3><br><br>
+            </div>
+            
+            <div>
+                <img src="pics/Jolteon.jpg" class="image1" alt="Jolteon" > <br>
+                <h3 class="heading3">This is an Jolteon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Flareon.jpg" class="image1" alt="Flareon" > <br>
+                <h3 class="heading3">This is an Flareon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Vaporeon.jpg" class="image1" alt="Vaporeon" > <br>
+                <h3 class="heading3">This is an Vaporeon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Umbreon.jpg" class="image1" alt="Umbreon" > <br>
+                <h3 class="heading3">This is an Umbreon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Espeon.jpg" class="image1" alt="Espeon" > <br>
+                <h3 class="heading3">This is an Espeon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Leafeon.png" class="image1" alt="Leafeon" > <br>
+                <h3 class="heading3">This is an Leafeon.</h3><br><br>
+            </div>
+
+            <div>
+                <img src="pics/Glaceon.png" class="image1" alt="Glaceon" > <br>
+                <h3 class="heading3">This is an Glaceon.</h3><br><br>
+            </div>
+
+            <br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br><br><br>
+        </form>
+<!------------------------------------------------------------------------------------>
+    
+            <div class="footer">
+                <p><u>Impressum:</u><a target="_blank" href="https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer">
+                    <img src="pics/GitHub-120px.png" class="imagegit" ></a><br> <u>Authors:</u> thetoastiestbread and Krismoeoeoe <br>
+                    <u>Usage:</u> Elektromotor-Prüfstand (C.Fischer , HTLinn)</p> 
+<!--                    <a target="blank" href="https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer">
+                        <img src="GitHub-120px.png" ></a>
+-->
+            </div>
+
+
+    </body>
+</header>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
