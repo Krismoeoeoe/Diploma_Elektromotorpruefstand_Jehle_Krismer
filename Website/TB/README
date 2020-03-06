@@ -1,0 +1,3 @@
+Files and stuff for Website-handling/actually being the website (gonna cut the crap here, this is just some playing with html, ajax and php, nothing really important, but it works, so you can basically copy this shit. Nuff' said)
+
+Everything just V1 for now, basically just a Button that makes JS use ajax to execute PHP, which gets  some stuff out of a .txt file and puts it on the website
