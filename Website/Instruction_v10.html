@@ -1,0 +1,261 @@
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!--Website 
+    Author: 7LPP
+    Date: 05.03.2020
+    https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer
+
+    Sources:
+        https://coolors.co/ffae75-b9f248-6600cc-e6e6ea-f4f4f8
+        https://brightside.me/article/the-ultimate-color-combinations-cheat-sheet-92405/
+        https://www.w3schools.com/cssref/css_websafe_fonts.asp   
+        https://www.w3schools.com/csS/css_positioning.asp
+        
+        https://stackoverflow.com/questions/18340057/how-to-display-two-buttons-beside-each-other
+        https://www.w3schools.com/howto/howto_css_button_group.asp
+
+        https://www.w3schools.com/CSSref/css3_pr_background-clip.asp
+
+        https://www.w3schools.com/cssref/pr_tab_table-layout.asp
+        https://www.w3schools.com/Css/tryit.asp?filename=trycss_ex_images_thumbnail_link
+
+        https://www.w3schools.com/Tags/att_img_align.asp
+        https://www.w3schools.com/css/css_float.asp
+        https://www.w3schools.com/Css/css_boxmodel.asp
+        https://www.mediaevent.de/tutorial/css-position-absolute-relative.html
+
+        https://www.w3schools.com/CSSref/pr_padding.asp
+        https://wiki.selfhtml.org/wiki/CSS/Eigenschaften/Abstand/padding
+-->
+<!------------------------------------------------------------------------------------>
+<!DOCTYPE html>
+<!------------------------------------------------------------------------------------>
+<!--html, body{
+    margin: 0;
+}-->
+<style>
+body{
+    background-image: url('pics/blue_lightblue_gradient.png');
+    background-size: 100%;
+    }
+
+
+.heading1{
+    background-color: #0017be;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    font-size: 40px;
+    text-align: center; 
+    padding: 25px; 
+    margin: -8px;
+    }
+
+.thanks{
+    border: 4px solid #f9b516;
+    margin: 0 130px 0 130px;
+    padding: 10px 0 10px 0;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+    }
+
+.einleitung{
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    margin: 50px 0 0 110px ;    
+    padding-left: 25px;
+    }
+
+
+
+.home{
+    border: 4px solid #f9b516;
+    border-radius: 50px;
+    position: fixed;
+    float: 10px;
+    width: 60px;
+    padding: 5px;
+    margin-left: 5px;
+    }
+.hometext{
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    }
+.imagehome{
+    position: relative;
+    float: left;
+    width: 60px;
+    transition-duration: 0.4s
+    }
+.home:hover{
+    opacity: 0.75;
+    }
+
+
+
+.footer{
+    background-color: #0017be;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: -8px;
+    }
+.imagegit{
+    position: relative;
+    float: right;
+    width: 60px;
+    transition-duration: 0.4s;
+    }
+.imagegit:hover{
+    opacity: 0.5;
+    }
+
+
+
+.imagemargin{
+    margin: 0 20px 40px 110px;
+    clear: left;
+    }
+.image1{
+    border: 5px solid white;
+    position: relative;
+    width: 640px;
+    margin: 0 30px 40px 0;
+    float: left;
+    }
+.imagetext{
+    position: relative;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    }
+
+
+</style>
+
+<!------------------------------------------------------------------------------------>
+
+<header>
+    <title>Ikea is Life</title>
+    <h1 class="heading1"> <u>Anleitung zur Bedienung des Elektromotor-Prüfstandes</u></h1>
+    <br>
+    <figure class="home">
+        <a target="_self" href="file:///home/patrick/Desktop/school/Diplomarbeit/MS4_Automatisierung/Website_plus_Instruction/Startsite_v10.html">
+        <img src="pics/yellow_home_f9b516.png" class="imagehome" >
+        <h3 class="hometext"> Home </h3>
+        </a>
+    </figure>
+</header>   
+
+<!------------------------------------------------------------------------------ bgcolor="#b9f248"------>
+
+<body>
+    <!--
+    <br> 
+    <h3 class="thanks"> Thank you for choosing our Elektromotor-Prüfstandes.<br><br>
+    Here you'll find all the infos you need to make the measurement. :)</h3>
+    <br><br>
+    -->
+    <figure class="einleitung">   
+        <h1><u> Bevor Sie den Messvorgang starten: </u></h1>
+        <h3> Stecken Sie entweder: <br>
+                                    +-----> beide Netzgeräte (unter dem Tisch) an einer Schuko-Steckdose an, oder <br>
+                                    +-----> die Modellflugzeug-Akkumulatoren bzw. Batterien an.</h3>
+        <h3> --> Der Raspberry Pi und Arduino starten dann von selbst. Das kann einige Momente dauern. </h3>
+        <h3> --> ... </h3>
+        <h3> --> ... </h3>
+        <h3> --> ... </h3>
+        <h3> --> ... </h3>
+    </figure>    
+    <br><br>
+
+<!------------------------------------------------------------------------------------>
+    <form>
+        <div class="imagemargin">
+            <img src="pics/Eevee.jpg" class="image1" alt="Eevee">
+            <h3 class="imagetext">
+                <br><i>This is an Eevee.</i><br><br>
+                --> Um den automatischen Messvorgang zu starten, drücken Sie auf den "Start"-Button.
+            </h3>
+        </div>
+
+
+        <div class="imagemargin">
+            <img src="pics/Jolteon.jpg" class="image1" alt="Jolteon" > <br>
+            <h3 class="imagetext">
+                <i>This is a Jolteon.</i>
+                --> Um dem Messvorgang manuel durchzuführen und mittels des Potentiometers die Drehzahl einzustellen, 
+                    drücken Sie auf den "Freerunnung"-Button.
+            </h3>
+        </div>
+
+
+        
+        <div class="imagemargin">
+            <img src="pics/Flareon.jpg" class="image1" alt="Flareon" > <br>
+            <h3 class="imagetext">
+                <i>This is a Flareon.</i><br><br>
+                --> Um dem Messvorgang während des Vorganges abzubrechen, drücken Sie auf den "Halt"-Button. 
+            </h3>
+        </div>
+
+        <br>
+
+        <div class="imagemargin">
+            <img src="pics/Vaporeon.jpg" class="image1" alt="Vaporeon" > <br>
+            <h3 class="imagetext">
+                <i>This is a Vaporeon.</i>
+            </h3>
+        </div>
+
+        <div class="imagemargin">
+            <img src="pics/Umbreon.jpg" class="image1" alt="Umbreon" > <br>
+            <h3 class="imagetext">
+                <i>This is an Umbreon.</i>
+            </h3>
+        </div>
+
+        <div class="imagemargin">
+            <img src="pics/Espeon.jpg" class="image1" alt="Espeon" > <br>
+            <h3 class="imagetext">
+                <i>This is an Espeon.</i>
+            </h3>
+        </div>
+
+        <div class="imagemargin">
+            <img src="pics/Leafeon.png" class="image1" alt="Leafeon" > <br>
+            <h3 class="imagetext">
+                <i>This is a Leafeon.</i>
+            </h3>
+        </div>
+
+        <div class="imagemargin">
+            <img src="pics/Glaceon.png" class="image1" alt="Glaceon" > <br>
+            <h3 class="imagetext">
+                <i>This is a Glaceon.</i>
+            </h3>
+        </div>
+
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+
+    </form>
+
+<!------------------------------------------------------------------------------------>
+        <div class="footer">
+            <p><u>Impressum:</u>
+                <a target="_blank" href="https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer">
+                <img src="pics/GitHub-120px.png" class="imagegit" alt="Github-Repository">
+                </a>
+            <br>
+            <u>Authors:</u> thetoastiestbread and Krismoeoeoe <br>
+            <u>Usage:</u> Elektromotor-Prüfstand (C.Fischer , HTLinn)</p> 
+        </div>
+
+    </body>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
