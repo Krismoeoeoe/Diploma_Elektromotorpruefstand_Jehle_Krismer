@@ -1,0 +1,1261 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	XH Herstellungsprozess-Shellscript @15Apr17:
+%	--------------------------------------------
+%   a)  wenn keine 'ps'-Macros genutzt werden:
+%	#!/bin/sh
+%	pdflatex $ifn
+%	pdflatex $ifn
+%   b)  mit 'ps' Macros (zB. 'pspicture') im Source:
+%	#!/bin/sh
+%	ifn="MeinLatexFile.tex"
+%	latex $ifn
+%	fn2="$(echo $ifn|sed s/.tex/.dvi/)"
+%	fn3="$(echo $ifn|sed s/.tex/-pics.pdf/)"
+%	  ### now dvipdf  $fn2 into $fn3 Container ...
+%	dvipdf $fn2  $fn3
+%	#dvipdf $(echo $ifn|sed s/.tex/.dvi/)
+%	  ### now pdflateXing $ifn ... (zweimal - fuers Inhaltsverzeichnis)
+%	pdflatex $ifn
+%	pdflatex $ifn
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\listfiles			%lists included files while processing 'pdflatex'
+\documentclass[12pt,a4paper]{article}
+  %\usepackage{etex}		%gegen 'no more room for new dimen...' error bei 'tikz' xh@RaE1
+
+	% encoding:
+  %%\usepackage[latin1]{ucs}
+  %%\usepackage[latin1]{inputenc}
+  %%\usepackage[ansinew]{inputenc}
+  %%\usepackage[cp850]{inputenc}
+  %\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+%\usepackage{geometry}						geht nit
+%\geometry{bottom=-20mm}
+
+  %\usepackage{amssymb}
+\usepackage{amsmath}
+  %\usepackage{extarrows}	%\xleftrightarrow[obentext]{untentext}
+\usepackage{wasysym}
+\usepackage{pxfonts}
+\usepackage{verbatim}
+\usepackage{alltt}
+\usepackage{moreverb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+  %\usepackage{theorem}
+  %\usepackage[dvips]{color}
+  %\usepackage{lmodern}
+  %\usepackage{textcomp}
+\usepackage{multicol}		% 2-, 3-, ... -spaltige Formatierung mit 'multicols'
+\usepackage{multirow}		% fuer 'tabular' - Tabellen
+ %\usepackage{makeidx}
+\usepackage{imakeidx}		% erspart dieses externe Stichwortprogramm
+ \usepackage{pdfpages}	% fuer 'includepdf' (stattdessen nimmi meistens 'includegraphics[page=1,...]')%=======================????????????????????????????????????
+\usepackage{mdwlist}		% f. 'compact lists' "itemize*", "enumerate*", "description*"
+  %\usepackage{ulem}		%... produziertma nFehler ban 'latex' run
+\usepackage{longtable}		% fuer tabellen ueber mehrere Seiten
+\usepackage{xcolor}
+\definecolor{lltgy}{gray}{0.96}	% selbstdefinierte Farben
+\definecolor{ltgy}{gray}{0.91}
+\definecolor{dkgn}{rgb}{0.0,0.7,0.0}
+\definecolor{dkbu}{rgb}{0.0,0.0,0.6}
+\definecolor{ddkbu}{rgb}{0.0,0.0,0.45}
+%\definecolor{htllogo}{cmyk}{95,43,0,39}
+\definecolor{htllogo}{RGB}{7,88,155}
+
+\usepackage{ifthen}		% fuer 'ifthenelse{}{}{}'
+\usepackage{ifpdf}		% fuer {\ifpdf ... \fi}
+\usepackage{listings}
+\lstset{language=C}
+\lstset{basicstyle=\footnotesize}
+  %\lstset{basicstyle=\small}
+  %\lstset{basicstyle=\normalsize}
+\lstset{backgroundcolor=\color{ltgy}}%=======================????????????????????????????????????
+\lstset{showstringspaces=false}
+\lstset{breaklines=true}
+  %\lstset{tabsize=4}
+\lstset{morecomment=[l][\color{dkgn}]{\%},%
+	morecomment=[s][\color{dkgn}]{/*}{*/}}
+\lstset{numbers=left}
+
+\usepackage{fancyhdr}
+  %\usepackage{framed}		%'\begin{framed}' ... '\end{framed}', schautAusWiePartezettel:-)
+\usepackage{hyphenat}		%fuer '\hyph{}'
+  %\usepackage{lastpage}	%fuer '\pageref{LastPage}' - **funzt nid bei allen**
+\usepackage{url}		%fuer '\url{...}'
+
+% lscape oder pdflscape: ('landscape' == Querformat)
+\usepackage{lscape}
+  %\usepackage{pdflscape}
+\usepackage{rotating}		%f. 'rotate' und 'turn'
+\usepackage[active]{pst-pdf}
+\usepackage{pst-circ}
+\usepackage{pst-plot}
+\usepackage{pst-uml}
+  %\usepackage{calc}
+\usepackage{fp}
+  %\usepackage[official]{eurosym}
+\usepackage[gen]{eurosym}
+
+	% YHs Raender links 30mm rechts 25mm einstellen:
+\setlength{\hoffset}	{30mm-1in}
+\setlength{\oddsidemargin}{0pt}		%bei doppelseitigem Druck umstellen!
+\setlength{\textwidth}	{\paperwidth-55mm}
+
+\setlength{\topmargin}	{2pt} %{0pt}
+\addtolength{\voffset}  {-23mm} %{-16.2mm}
+\addtolength{\textheight}{39mm}
+
+\setcounter{tocdepth}{4}		%bringt auch 'paragraph{titel}' ins Inhaltsverzeichnis
+%
+\definecolor{ydkbu}{rgb}{0.0,0.0,0.6}	% YHs blaue Schriftfarb
+\newcommand{\yhbu}[0]{\color{ydkbu}}	% Macro fuer schreibfaulen XH
+%\newcommand{\yhbu}[0]{\color{ydkbu}\usefont{T1}{laess}{m}{n}}	% Macro fuer schreibfaulen XH
+\definecolor{corrclr}{rgb}{0.7,0.2,0.2}		% XHs Korrekturen-Farb ...
+\newcommand{\korr}[0]{\color{corrclr}\fontsize{8pt}{9pt}\selectfont\bf} %plus Faulheitsmacro
+\makeindex
+
+	%/* Line Spacing: */
+\usepackage{setspace}
+
+
+	%/* selbst-definierte Macros: */
+\newcommand{\cmnt}[1]{}			%eigene Kommentier-Funktion \cmnt{ ...Kommentar... }
+\newcommand\tbs{\textbackslash}		%'\textbackslash{}' isma z'long zan tippen ;-)
+\newcommand{\xilist}[6]{		%XHs eigenes Auflistungs-Format
+	\noindent\\[#3mm]\protect\begin{list}{#1}{\setlength\topsep{-4mm}%
+	\setlength\partopsep{-1.0mm}\setlength\itemsep{#4mm}\setlength\leftmargin{#2mm}%
+	\setlength\itemindent{-0.0mm}\setlength{\baselineskip}{0.9\baselineskip} }%
+	#6%
+	\protect\end{list}\hfill\\[#5mm]%
+}
+
+	%/* eineinhalbzeilige Formatierung: */
+% \newcommand{\mylinespacing}[0]{\singlespace}	% 1,0-ZeilenAbstand
+\newcommand{\mylinespacing}[0]{\onehalfspace}	% 1,5-ZeilenAbstand
+% \newcommand{\mylinespacing}[0]{\doublespace}	% 2,0-ZeilenAbstand
+
+
+	%/* serifenlose Schrift-Grundeinstellung: */
+% /*Font Family:*/
+%\renewcommand*{\familydefault}{\rmdefault}	%klassisches 'Roman' (statt MicroMurx...)
+\renewcommand*{\familydefault}{\sfdefault}	%klassisches 'Helvetica' statt 'Murx-Arial'
+
+
+%====================================================================================
+%\clearpage\vfill\newpage{}
+%====================================================================================
+
+%
+%===================================================
+%
+\begin{document}
+%\addtocontents{toc}{\protect\begin{multicols}{2}} %-fuer mehrspaltiges Inh.Verz
+\renewcommand{\listfigurename}{}
+\renewcommand{\listtablename}{}
+
+\newcommand\logoB[1]{%
+	%dieses Macro 'logoB' zeichnet das "neue" HTL Logo mithilfe der
+	% 'ps-tricks' Pakete/Anweisungen; Parameter#1 bestimmt die "Dicke"
+	% der Balken; die "Groesse" bitte mit '\scalebox{factor}{logoB{0.12}}',
+	% die Grundlinie mit '\raisebox{pos}{logoB{0.12}}' einstellen;
+	% die Farbgebung spezifiziert man HIER:
+  \definecolor{lobu}{rgb}{0.05,0.05,0.50}
+  \definecolor{hibu}{rgb}{0.20,0.20,0.70}
+  \definecolor{loye}{rgb}{0.85,0.75,0.36}
+  \definecolor{hiye}{rgb}{0.99,0.92,0.00}
+  \definecolor{logn}{rgb}{0.00,0.65,0.20}
+  \definecolor{hign}{rgb}{0.00,0.79,0.30}
+  \definecolor{lord}{rgb}{0.66,0.00,0.00}
+  \definecolor{hird}{rgb}{0.89,0.00,0.00}
+  %
+  \resizebox{11.5mm}{!}{%
+  \begin{pspicture}[showgrid=false](-1,-1)(1,1)
+	\SpecialCoor	%das erlaubt PS -Berechnungen mit dem '!'; hier zur "DickenSkalierung"
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=lobu,fillstyle=solid]%
+		(-#1, -1.00)( #1, -1.00)( 1.00, -#1)(! 1.00 #1 2 mul sub -#1)
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=hibu,fillstyle=solid]%
+		(! 1.00 #1 2 mul sub          -#1)(! 1.00 #1 3 mul sub   0.00)%
+		(! -#1         -1.00 #1 2 mul add)(-#1,-1.00)
+
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=hiye,fillstyle=solid]%
+		( 1.00, -#1)( 1.00, #1)( #1, 1.00)(! #1   1.00 #1 2 mul sub)
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=loye,fillstyle=solid]%
+		(! #1    1.00 #1 2 mul sub)(! 0.00   1.00 #1 3 mul sub)%
+		(! 1.00 #1 2 mul sub   -#1)( 1.00, -#1)
+
+	\pspolygon[linewidth=0.0pt,linestyle=none,fillcolor=hign,fillstyle=solid]%
+		( #1, 1.00)( -#1, 1.00)(-1.00, #1)(! -1.00 #1 2 mul add   #1)
+	\pspolygon[linewidth=0.0pt,linestyle=none,fillcolor=logn,fillstyle=solid]%
+		(! -1.00 #1 2 mul add   #1)(! -1.00 #1 3 mul add    0.00)%
+		(! #1    1.00 #1 2 mul sub)( #1, 1.00)
+
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=lord,fillstyle=solid]%
+		(-1.00, #1)(-1.00, -#1)(-#1, -1.00)(! -#1    -1.00 #1 2 mul add)
+	\pspolygon[linewidth=0.1pt,linestyle=none,fillcolor=hird,fillstyle=solid]%
+		(! -#1   -1.00 #1 2 mul add)(! 0.00   -1.00 #1 3 mul add)%
+		(! -1.00 #1 2 mul add    #1)(-1.00, #1)
+	\NormalCoor
+  \end{pspicture}%
+  }%
+}
+
+\newcommand{\HtlHeader}[0]{%
+	%\hspace*{-11mm}%
+	%\raisebox{-1mm}{\logoB{0.12}}%
+	{\ifpdf
+	 \includegraphics[width=10.3mm]{pics/logoBpdf.pdf}
+	\fi}
+	\hspace*{2mm}%
+	\parbox[b]{110mm}{\flushleft
+		{\fontsize{20pt}{20pt}\selectfont\bf HTL}
+		{\fontsize{16.2pt}{16.2pt}\selectfont\color{htllogo}\bf anichstra"se}
+		\\[-4.05mm]{\color{darkgray}\rule{110mm}{0.5pt}}
+		\\[-2.24mm]{\fontsize{7pt}{7pt}\selectfont\color{darkgray}
+			Elektronik $\cdot$ Elektrotechnik $\cdot$
+			Maschinenbau $\cdot$ Wirtschaftsingenieure
+			\rule{0pt}{0mm}
+		%\vspace*{1.1mm}
+		}
+	}%
+	\hspace*{5mm}%
+	\raisebox{-0.2mm}{\ifpdf \includegraphics[width=25mm]{pics/HTLgenlogo02}\fi}
+	\\[-1.5mm]\rule{\textwidth}{0.5pt}
+	%\hfill
+}%HtlHeader
+
+
+%/*Header-Einstellung*/
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+\renewcommand{\subsubsectionmark}[1]{\markright{#1}}
+\lhead{\HtlHeader}
+\chead{}
+\rhead{}
+\lfoot{Simon Jehle, Patrick Krismer}
+\cfoot{\thesection-\rightmark}
+%\cfoot{\thesubsubsection-\rightmark}
+\rfoot[\thepage]{\thepage/\pageref{LastPage}}
+\setlength{\headwidth}	{1.0\textwidth}
+\setlength{\headheight}{14mm}					%14mm sonsst sein die Bilder im Header weg
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.33pt}
+
+
+\addtocounter{page}{0}
+%
+%====================================================================================
+%
+ \begin{center}
+   \begin{minipage}{\linewidth}
+   \begin{center}
+	\vspace*{-14mm}
+	%\HtlHeader{}
+	\noindent%
+	\\[35mm]{\fontsize{25pt}{25pt}\selectfont\bf DIPLOMARBEIT}
+	\\[19mm]{\fontsize{20pt}{20pt}\selectfont\textbf{\textsc{Flugmodellmotor-Prüfstand}}}
+	\\[15mm]{\fontsize{12.4pt}{12.4pt}\selectfont\bf
+		Höhere Technische Bundeslehr- und Versuchsanstalt Anichstra"se}
+	\\[ 5mm]\rule{132mm}{1.0pt}
+	\\[ 4mm]{\fontsize{12.4pt}{12.4pt}\selectfont\bf Abteilung}
+	%\\[ 5mm]{\fontsize{12.4pt}{12.4pt}\selectfont\bf Elektronik \& Technische Informatik}
+	\\[ 5mm]{\fontsize{16pt}{16pt}\selectfont
+		\textbf{\textsc{Elektronik und technische Informatik}}}
+	\\[24mm]{\hspace*{2mm}\parbox{154mm}{\fontsize{12.4pt}{12.4pt}\selectfont
+	  \parbox[t]{75mm}{
+		Ausgef"uhrt im Schuljahr 2019/20 von:
+		\\[5.0mm]Simon Jehle 5BHel
+		\\[2.5mm]Patrick Krismer 5BHel
+	  }
+	  \hspace*{6mm}
+	  \parbox[t]{55mm}{
+		Betreuer/Betreuerin:
+		\\[5.0mm]Dipl.-Ing. Christoph Schönherr
+		\\[5.0mm]Dipl.-Ing. Christian Fischer
+		
+	  }
+%	  \\[12mm]{Projektpartner: {\color{blue}Dipl.-Ing. Christian Fischer, HTL-Anichstraße}, Innsbruck}
+	  \\[14mm]{Innsbruck, am 01.04.2020}
+	  \\[16mm]\rule{150mm}{0.5pt}
+	  \\[ 8mm]
+	  \parbox[t]{75mm}{
+		Abgabevermerk:
+		\\[3.25mm]Datum:
+	  }
+	  \hspace*{6mm}
+	  \parbox[t]{50mm}{
+		Betreuer/in:
+	  }
+	}}
+   \end{center}\hfill
+   \end{minipage}
+ \end{center}
+ %
+%====================================================================================
+%
+\newpage
+\subsection*{Danksagung}
+	An dieser Stelle möchten wir uns bei allen Personen bedanken, die uns während der gesamten Diplomarbeit 
+	unterstützt haben und zu deren Gelingen beigetragen haben. \\\\
+%	XH sagt er will nit bedankrt werden	
+\noindent
+	Bedanken möchten wir uns bei den {\bf Fachlehrern} und {\bf Professoren}, die uns durchgehend Ratschläge gaben ...\\\\
+\noindent
+	Ebenfalls möchten wir uns bei den {\bf Mitarbeitern der Materialbeschaffung} bedanken. Durch die hervorragende 
+	Organisation in den Magazinen konnten alle nötigen Bauteile schnell erhalten werden. \\\\
+\noindent
+	Abschließ end möchten wir uns auch recht herzlich bei {\bf unseren Eltern} bedanken, die uns dei gesamte Zeit 
+	emotionalen Rückhalt gaben ... 
+%
+%====================================================================================
+%
+\newpage
+\subsection*{Gendererklärung}
+	Aus Gr"unden der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform
+	des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf
+	hingewiesen, dass die ausschlie"sliche Verwendung der m"annlichen Form
+	geschlechtsunabh"angig verstanden werden soll.
+%
+%====================================================================================
+%
+\newpage
+%\subsection*{Kurzfassung / Abstract}
+%\subsubsection*{Deutsch}
+%	Die vorliegende Diplomarbeit beschreibt die weitere Verbesserung eines Elektromotor-Prüfstandes. \\
+%	Ein bereits, aus vorherigen Diplomarbeiten unter der Aufsicht von Dipl. Ing Christian Fischer, 
+%	vorhandener Prüfstand für Klein-Elektromotoren wird dahingehend verändert, dass technische Mängel 
+%	ausgebessert werden und der gesamte Messvorgang automatisiert abläuft. \\\\
+%	Darunter fällt die Regelung der Drehzahl des Elektromotors und die Einstellung der mechanischen Belastung 
+%	durch eine Wirbelstrombremse. \\
+%
+%	Gemessen werden die Eingangs- und Ausgangsleistungen, die im Zusammenhang mit dem gemessenen Drehmoment
+%	den {\bf Wirkungsgrad} des Motors ergeben. \\
+%	Dieser wird wiederum im Zusammenhang mit der {\bf Drehzahl} und der {\bf mechanischen Belastung} angezeigt, um den 
+%	optimalen Wirkungsgrad des Motors ermitteln zu können. \\\\
+%
+%	Die Messungen werden durch divere Bauteile wie Hallsensoren, einer Waage, einer Lichtschranke u.w. durchgeführt. 
+%	Die Rohdaten werden in dem 'Embedded System' {\bf Aruino MEGA 2560} verarbeitet. 
+%	Dieser sendet dann die Messwerte zu einem {\bf Raspberry Pi 3B}, welcher die Werte speichert und auf der Bedienwebseite 
+%	in Tabellenform anzeigt. \\\\
+%
+%	Der Prüfstand ist insbesondere für den DC-Elektromotor: {\bf Dualsky XM6360EA-10	Outrunner Brushless Motor} konzipiert. 
+%	Dieser wird als Antrieb für den Propeller eines RC-Modellflugzeuges verwendet. 
+%
+\subsection*{Kurzfassung / Abstract}
+\subsubsection{Deutsch}
+  Die vorliegende Diplomarbeit beschreibt die weitere Verbesserung eines Elektromotor-Prüfstandes. \\
+  Ein bereits aus vorherigen Diplomarbeiten, unter der Aufsicht von Dipl. Ing. Christian Fischer,
+  vorhandener Prüfstand für Klein-Elektromotoren wird dahingehend verändert, dass technische Mängel 
+  ausgebessert werden und der gesamte Messvorgang automatisiert abläuft. \\\\
+  Darunter fällt die Regelung der Drehzahl des Elektromotors und die Einstellung der mechanischen Belastung 
+  durch eine Wirbelstrombremse. \\
+%
+  Gemessen wird die das Drehmoment und die Drehzahl des Motors, sodass die Ausgangsleistung berechnet werden kann, 
+  sowie die Eingangsleistung, sodass der {\bf Wirkungsgrad} des Motors berechnet werden kann. \\
+  Dieser wird wiederum im Zusammenhang mit der {\bf Drehzahl} und der {\bf mechanischen Belastung} angezeigt, um den 
+  Wirkungsgrad des Motors bei verschiedenen Bedingungen ermitteln zu können. \\\\
+%
+  Die Messungen werden durch divere Bauteile wie Hallsensoren, einer Waage, einer Lichtschranke und weiteren durchgeführt. 
+  Die Rohdaten werden in dem 'Embedded System' {\bf Arduino MEGA 2560} verarbeitet. 
+  Dieser sendet dann die Messwerte zu einem {\bf Raspberry Pi}, welcher sie auf der Bedienwebseite 
+  in Tabellenform anzeigt und, falls ein Messdurchgang durchgeführt wird, die Werte speichert. \\\\
+%
+  Der Prüfstand ist insbesondere für den DC-Elektromotor: {\bf Dualsky XM6360EA-10  Outrunner Brushless Motor} konzipiert. 
+  Dieser wird als Antrieb für den Propeller eines RC-Modellflugzeuges verwendet. 
+%
+\newpage
+\subsubsection{Englisch}
+  This thesis describes the further improvement of an Electromotor-testing-bench.\\
+  An already existing testing bench, from previous theses under the supervision by Dipl. Ing. Christian Fischer, 
+  is being changed, for an improvement of technical faults and for the automatisation of the entire measuring-process.\\\\
+  This includes the controlling of the rotational speed of the motor and the adjustment of the mechanical load, using an
+  eddy current brake.
+%
+  Measurements are being taken of the torque and the rotational speed of the motor, which are being used for calculating
+  the output-power, and the input-power, with which the {\bf efficiency factor} of the motor can be calculated. \\
+  This factor is, like the {\bf rotational speed} and the {\bf mechanical load}, displayed, to work out the efficiency factor
+  of the motor at different conditions. \\\\
+%
+  The measurements are being carried out by various components, like Hall-sensors, a scale, a photoelectric barrier and others.
+  The raw measurements are being processed in the 'Embedded System' {\bf Arduino MEGA 2560}.
+  It sends the processed measurements to a {\bf Raspberry Pi}, which displays them on the Interface-Website in table-form 
+  and, if a measuring-process is being carried out, saves the measured values. \\\\
+%
+  The testing bench was developed with the {\bf Dualsky XM6360EA-10 Outrunner Brushless Motor} in mind.
+  This motor is being used as the drive for an RC model airplane.
+% 
+\newpage
+\subsubsection{Grafische Veranschaulichung}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{diagrams/Kurzfassung2}
+\caption{Kurzfassung - grafische Veranschaulichung}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsection*{Projektergebnis}
+{\yhbu
+	Allgemeine Beschreibung, was vom Projektziel umgesetzt wurde, in einigen
+	kurzen Sätzen. Optional Hinweise auf Erweiterungen. Gut machen sich in diesem
+	Kapitel auch Bilder vom Gerät (HW) bzw. Screenshots (SW).
+	Liste aller im Pflichtenheft aufgeführten Anforderungen, die nur teilweise oder gar
+	nicht umgesetzt wurden (mit Begründungen).\\\\}
+%	
+\begin{itemize}
+\item[A]Steuerung des Brushless-DC-Elektromotors
+\item[B]Messung der Eingangsleistung
+\item[C]Messung der Ausgangsleistung
+\item[D]Messung der Drehgeschwindigkeit
+\item[E]Messung des Drehmomentes
+\item[F]
+\item[G]
+\item[H]Steuerung des Schlittens der Wirbelstrombremse
+\item[I]Webseite für Steuerung und Messwertentnahme
+\item[J]Webseite für Bedienung 
+\item[K]Speicherung der Messwerte in .csf-File
+\item[L]
+\end{itemize}
+%
+\paragraph{Möglichkeiten zur Erweiterung}
+\begin{itemize}
+\item[Zu H]Darstellung der Messwerte in Diagrammform (HTML/CSS)
+\end{itemize}
+%
+%====================================================================================
+%
+\newpage
+\tableofcontents
+%
+%====================================================================================
+%\clearpage\vfill\newpage{}
+%====================================================================================
+\cfoot{\thesection-\rightmark}	%setzt Kapitelnummer und Kapiteltext in die FusszeilenMitte
+\noindent%
+\newpage
+\setcounter{section}{0}
+\section{EINLEITUNG}
+%	{\yhbu
+%	In der Einleitung wird erklärt wieso man sich für dieses Thema entschieden hat.
+%	(Zielsetzung und Aufgabenstellung des Gesamtprojekts, fachliches und
+%	wirtschaftliches Umfeld)}
+%
+\paragraph*{Elektromotoren}\mbox{}\\
+	Elektromotoren sind allgegenwärtig. Von der Entdeckung 1820 durch 'Hans Christian \O rsted' bis hin 
+	zu den Teslas, die schon unsere den heutigen Stra\ss en befahren. \\
+	Sie sind aus dem heutigen Leben nicht mehr wegzudenken. 
+	Darum ist es von höchstem Interesse ihr Funktionalität maximal ansnutzen zu können. 
+	Ob nun hohe Drehzahl, gro\ss es Drehmoment, erhebliche Energieeffiezienz oder 
+	geringer mechanischer 	Verschlei\ss  das Ziel ist, all das geht allein von den Informationen die über beschriebenes 
+	Gerät vorhanden sind aus. 
+	Deshalb ist es von gro\ss er Wichtigkeit Messungen mit hohe Genauigkeit und Fehlerfreiheit garantieren zu können. 
+	Dies ist das Hauptziel der folgenden Diplomarbeit. 
+%
+\paragraph*{Zur Geschichte des Prüfstandes}\mbox{}\\
+	Der vorliegende Elektromotorprüfstand entstand bereits im Schuljahr 2014/15 
+	und wurde von einer Diplomarbeitsgruppe, bestehend aus Auer Christian Fill Wolfgang Markus und Prost Claudio, 
+	der Abteilung Maschinenbau geplant und konstruiert. \\\\
+%	
+	Im Schuljahr 2016/17 wurde er dann von den Schülern Mahlknecht Lukas und Schöffmann Manuel 
+	aus der Abschlussklasse 5AHWII unter Verwendung des Gerätes und Software 'LabVIEW' weiterentwickelt. \\\\
+%
+	Jedoch waren zu diesem Zeitpunkt die Messergebnisse durch unkontrollierbare Spannungsspitzen in der Versorgung 
+	des Motors stark fehlerbehaftet und deshalb unbrauchbar. \\
+	Durch eine weiteroptimierung wird dieses Problem behoben. \\
+	Au\ss erdem wird der gesamte Messvorgang automatisiert ablaufen um die Genauigkeit der Messungen zu steigern 
+	und den durchführenden Prüfer zu entlasten.
+%	
+\paragraph*{Wahl dieser Diplomarbeit}\mbox{}\\
+	Die weiter Optimierung des Elektromotorprüfstandes wurde ausgewählt, da sie die Verwendung von 
+	Software sowie Hardware verbindet und ein weites Spektrum der in der bisherigen schulischen Laufbahn 
+	gelernten Fähigkeiten zur Anwendung bringt. \\
+	Zudem fanden beide Mitglieder der Dilpomarbeitsgruppe den theoretischen sowie praktischen Einsatz von 
+	Elektromotoren äu\ss erst spannend. \\
+%
+%====================================================================================
+%
+\newpage
+\subsection{Organisation der Diplomarbeit}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.44, angle=90]{diagrams/Dipl_Organigramm5}
+	\caption{Organisation der Diplomarbeit}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsection{Mindmap}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.24, angle=90]{diagrams/Mindmap_Pruefstand3}
+	\caption{Mindmap der Diplomarbeit}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\section{VERTIEFENDE AUFGABENSTELLUNG}
+ \subsection{Simon Jehle}
+Vertiefende Aufgabenstellung laut Antrag: {\bf Messdatenerfassung}
+%
+ \subsection{Patrick Krismer}
+Vertiefende Aufgabenstellung laut Antrag: {\bf Ablaufsteuerung}
+
+
+\newpage
+\section{DOKUMENTATION DER ARBEIT}
+   {\yhbu
+	Es werden die Projektergebnisse dokumentiert.
+	\begin{itemize*}
+	\item	Grundkonzept
+	\item	Theoretische Grundlagen
+	\item	Praktische Umsetzung
+	\item	Lösungsweg
+	\item	Alternativer Lösungsweg
+	\item	Ergebnisse inkl. Interpretation
+	\end{itemize*}
+	%
+	Weitere Anregungen:
+	\begin{itemize*}
+	\item	Fertigungsunterlagen
+	\item	Testfälle (Messergebnisse...)
+	\item	Benutzerdokumentation
+	\item	Verwendete Technologien und Entwicklungswerkzeuge
+	\end{itemize*}
+   }%yhbu
+%
+%====================================================================================
+%====================================================================================
+%====================================================================================
+%
+\newpage
+\subsection{MS1 - Motoransteuerung}
+%
+\subsubsection{Drehzahleinstellung}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/rpm_control}
+	\caption{Blockdiagramm Drehzahleinstellung}
+\end{figure}
+%
+\subsubsection{Programm ATMega8}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/rpm_control_atmega8_code}
+	\caption{Flussdiagramm zum Programmcode vom ATMega8}
+\end{figure}
+%
+\newpage
+\subsubsection{Eingangsleistungsmessung}
+\paragraph{Messprinzip}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Eingangsleistungsmessung_aktivitaetsdiagramm}
+	\caption{Eingangsleistungsmessung Prinzip}
+\end{figure}
+%
+\newpage
+\subsubsection{Schaltung}
+\paragraph{Schaltungsentwurf}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.65]{pics_simps/Schaltungsentwurf_Pin.pdf}
+	\caption{Schaltungsentwurf für die Eingangsleistungsmessung}
+\end{figure}
+%
+\newpage
+\paragraph{Realisierung auf Lochrasterplatine}\mbox{}\\ %siehe https://tex.stackexchange.com/questions/32160/new-line-after-paragraph#32164
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Schaltungsrealisierung_Pin}
+	\caption{Foto der gelöteten Schaltung nach dem Schaltungsentwurf (+Vorverstärker für Ausgangsspannung) hier ohne Pumpkondensatoren für MAX680CPA+}
+\end{figure}
+%
+\subsubsection{Arduino-Programm}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Programm_Pin}
+	\caption{Flussdiagramm zum Programmablauf des Arduinos für die Eingangsleistungsmessung\vspace{0.3cm}\newline
+	\textsuperscript{1}Daten von einer Waage zu empfangen ist wichtig für die Ausgangsleistungsmessung $\rightarrow$ Wird im nächsten Kapitel gezeigt}
+\end{figure}
+%
+%====================================================================================
+%====================================================================================
+%
+\newpage
+\subsection{MS2 - Ausgangsleistungsmessung}
+\subsubsection{Messprinzip}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Pout_Aktivitaetsdiagramm}
+	\caption{Blockschaltbild des Prinzips der Ausgangsleistungsmessung}
+\end{figure}
+%
+\newpage
+\paragraph{Ausgangsleistung - Berechnung}\mbox{}\\
+Die Ausgangsleistung kann mit der folgenden Formel der rotatorischen Leistung errechnet werden:\\
+\begin{figure}[h!]
+	\centering
+	\huge$P\:=\:M\:*\:\omega$\vspace{0.5cm}\\
+	\Large$M\:=l\:*\:F$\\
+	\Large$\omega\:=\:2\,*\,\pi\,*\,f$\vspace{0.5cm}\\
+	\raggedright
+	\large P ... Leistung [W]\\
+	\large M ... Drehmoment [Nm]\\
+	\large $\omega$ ... Kreisfrequenz [$\frac{1}{s}$]\\
+	\large l ... Länge des Kraftübertragungsarms von Drehmomentaufnehmer auf Waage [m]\\
+	\large F ... Kraft (umgerechnet von Gewicht) [N]\\
+	\large f ... Frequenz [$\frac{1}{s}$]
+\end{figure}
+%
+\newpage
+\subsubsection{Lichtschranke}
+%
+\paragraph{Aufbaudiagramm}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/lichtschranke_prinzip}
+	\caption{Aufbaudiagramm der Lichtschranke zur Drehzahlmessung}
+\end{figure}
+%
+\newpage
+\paragraph{Programmcode zur Drehzahlmessung}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/lichtschranke_aktivitaetsdiagramm}
+	\caption{Aktivitätsdiagramm Drehzahlmessung mit Lichtschranke}
+\end{figure}
+%
+\paragraph{RS232- zu 5V bzw. Serial-Wandlerschaltung}\mbox{}\\
+\paragraph{Schaltungsentwurf}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Schaltungsentwurf_232toSerial}
+	\caption{Schaltungsentwurf für die RS232 zu Serial-Übersetzerschaltung}
+\end{figure}
+%
+\newpage
+\paragraph{Realisierung auf Steckbrett}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics_simps/Schaltungsrealisierung_232toSerial}
+	\caption{Foto der aufgebauten Schaltung nach Schaltungsentwurf}
+\end{figure}
+%
+\newpage
+\subsubsection{Kommunikationstest Waage - Arduino}
+%
+\paragraph{Testaufbau}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics/waagetest364-circuit}
+	\caption{Testaufbau der Kommunikation mit der Waage}
+\end{figure}
+%
+\paragraph{Testergebnis}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics/waagetest364}
+	\caption{Vergleich Waage-Anzeige mit dem Serial-Monitor Output der Arduino-IDE}
+\end{figure}
+%
+\newpage
+\paragraph{Testprogramm}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{pics/waagetest364-prog}
+	\caption{Aktivitätsdiagramm für das Waage-Arduino Kommunikations-Testprogramm}
+\end{figure}
+%
+\newpage
+\subsection{MS2 - Wirbelstrom-Bremse}
+Zuvor wurde der Bremssattel mit einen 'Schrack RL 306 024 - Koppelrelai' gesteuert. 
+Dieses wurde mit einem Tastknopf und Positionsendschalter geschalten wurde. \\\\
+Der grüne Tastknopf am Prüftisch startete den Bremsvorgang, der Positionsendschalter links lies die Polarität der Versorgung umschalten, sodass der Motor wieder rückwärts fuhr und der Positionsendschalterrechts beendete den Bremsvorgang. \\
+%
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{pics/bremse/pes_links_gross}
+    \caption{Positionsendschalter links}
+  \end{minipage}
+  \hspace{10mm}
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{pics/bremse/pes_rechts}
+    \caption{Positionsendschalter rechts}
+  \end{minipage}
+\end{figure}
+%
+\begin{figure}[h!]
+Um genauere Messungen durchführen zu können musste der Bremssattel jedoch in bestimmten Abständen gestoppt werden können. 
+Dies lies sich nicht mit dem Relai bewerkstelligen. \\
+Stattdessen wird eine fertige H-Brücke-Platine 'MotoDriver2' verwendet, welche vom Arduino aus gesteuert wird. \\
+\end{figure}
+%
+%====================================================================================
+%
+\subsubsection*{Durchlaufzeit - Testmessung}
+\begin{figure}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{Zeitstop, 1 Durchlauf}\\
+\hline
+\hline
+Test Nr. & Versorgungsspannung & Zeit \\
+\hline
+. & . & .\\ 
+. & . & .\\
+\hline
+\end{tabular}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsubsection*{Vorheriger Kabellaufplan}
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[scale=0.35, angle=90]{pics/bremse/Bremse_Kabellaufplan_2}
+	\caption{Vorheriger Kabellaufplan für den Bremsvorgang}
+\end{figure}
+\newpage
+\subsubsection*{Erneuerter Kabellaufplan nacher}
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=\textwidth]{pics/bremse/Bremse_Kabellaufplan_erneuert}
+	\caption{Erneuerter Kabellaufplan für den Bremsvorgang}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsubsection*{H-Brücke}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.75]{pics/bremse/SBC-MotoDriver2}
+	\caption{SBC-MotoDriver2}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsubsection*{H-Brücke-Gehäuse}
+Um das MotoDriver2 zu schützen wird ein passendes Gehäuse mittels eines 3D-Druckers gefertigt. 
+In diesem wird die Platine mit M3-Schrauben befestigt. \\
+Mit M4-Schrauben wird der Deckel am Gehäuse festgeschraubt um es abzudecken. \\\\
+%
+An drei Seiten wurden Öffnungen freigelassen, um Kabel zur Versorgung (Front), Steuerung (Front) und 
+Motorabgang (Links, Rechts), auch wenn der Deckel verschlossen ist, anschlie\ss en zu können. \\
+%
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.4]{pics/bremse/gehaeuse1}
+	\caption{Gehäuse1 - geschlossen}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.4]{pics/bremse/gehaeuse3}
+	\caption{Gehäuse3 - geöffnet}
+\end{figure}
+%
+%====================================================================================
+%====================================================================================
+%
+\newpage
+\subsection{MS3 - Serial Kommunikation zwischen Arduino und Raspberry Pi}
+\subsubsection{Blockdiagramm}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=1]{pics_simps/block_ardutoraspi}
+	\caption{Blockdiagramm Verbindung Arduino zu Raspberry Pi mittels USB-Kabel}
+\end{figure}
+%
+\subsubsection{Programme}
+\paragraph{Arduino-Programm}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=1]{pics_simps/ardutoraspi_aktivitaet}
+	\caption{Aktivitätsdiagramm Arduino-Programm}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\paragraph{Raspberry-Programm}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=1]{pics_simps/raspitoardu_aktivitaet}
+	\caption{Aktivitätsdiagramm Raspi-Programm}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\subsubsection{Kommunikationstest}
+\paragraph{Testaufbau}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.42]{pics_simps/raspitoardutestaufbau_foto}
+	\caption{Foto des Testaufbaus für die Kommunikation zwischen Arduino und Raspberry Pi}
+\end{figure}
+%
+%====================================================================================
+%
+\newpage
+\paragraph{Testergebnis}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.7]{pics_simps/raspitoardutest_result}
+	\caption{Ergebnis des Kommunikationstests von Arduino zu Raspi}
+\end{figure}
+%
+%
+\newpage
+\subsection{MS3 - Datenbank bzw. Datenspeicherung}
+\subsubsection*{CSV-Dateiformat}
+Um die, vom Arduino gemessenen und verarbeiteten, Messwerte speichern zu können wird das 
+Dateiformat {\bf CSV}(\underline{C}ommand \underline{S}eparated \underline{V}alues') verwendet. \\\\
+%
+Es beschreibt einen einfachen Aufbau einer Textdatei um strukturiert Daten speichern zu können. \\
+Derzeit exestiert kein Standard, der dieses Dateiformat beschreibt, jedoch findet es weltweit Verwendung. 
+So ist es möglich in und aus Tabellenkalkulations-Softwares wie {\it Microsoft Excel}, {\it LibreOffice Calc} 
+und {\it weitere} ein .csv - File zu im- und exportieren um enthaltene Daten speichereffizient, selbst 
+zwischen unterschiedlichen Betriebssystemen, übertragen zu können. \\\\
+%
+Ein Beispiel für eine .csv-Datei:
+\begin{lstlisting}[frame=single]
+Listen Nr., Alter, Name, Abteilunng
+1, 17, Anton, El
+2, 18, Berta, W
+3, 18, Caesar, B
+7, 16, Dora, ET
+9, 17, Emil, MB
+\end{lstlisting}
+%
+\vspace{10mm}
+Der Aufbau funktioniert wie folgt:
+%
+\paragraph{Datensätze bzw. Zeilen}\mbox{}\\
+Um Datensätze zu trennen wird ein Zeichen verwendet. Meistens wird dafür der {\bf Zeichenumbruch} benutzt. \\
+Das Zeichen für den Zeichenumbruch kann unter verschiedenen Betriebssystemen variieren. \\
+%
+\paragraph{Datenfeldern bzw. Spalten}\mbox{}\\
+Um Datenfelder  zu trennen wird ein weiteres Zeichen verwendet. Meistens wird dafür das {\bf Komma} benutzt. \\
+Weitere gebräuchliche Zeichen sind: {\it Semikolon ; }, {\it Doppelpunkt : }, {\it Tabulatorzeichen}, {\it Leerzeichen}. \\\\
+%
+Für den strukturellen Aufbau kann jedes belibige Zeichen verwendet werden, 
+jedoch sollte es eindeutig sein und nicht in den Daten selbst vorkommen um Fehler zu vermeiden. 
+%
+\paragraph{Kopfzeile}\mbox{}\\
+Der erste Datensatz kann ein Kopfdatensatz sein, der die Spaltennamen definiert. {\color{red}-den satz hab i wörtlich aus wikipedia, muss ma des dazuschreiben oder passts wenn die Wessite im Literaturverzeichnis drin steht?}
+
+
+%
+%====================================================================================
+%
+\newpage
+\subsection{MS4 - Messaktivierung}
+\subsection{MS4 - Website-Informationsinterface}
+%
+\subsubsection*{Startseite}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{pics/website/startsite0}
+\end{figure}
+%
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{pics/website/startsite_tabelle_leer}
+\caption{Statseite}
+\end{figure}
+%Der Messvorgang wird über eine Website gesteuet, die auf dem Raspi 
+%
+%====================================================================================
+%
+\newpage
+\subsection{MS5 - Professionalisierung des Aufbaues mit Platinen und Bedienpult }
+\subsection{MS5 - Automatischer Überstromschutz}
+Der Überstromschutz ist ein Teilprogramm, welches kontrolliert, ob die gemessenen Werte in einem definierten Bereich sind und diesen nicht überschreiten. \\\\
+{\bf Pseudocode Überstromschutz:}
+\begin{lstlisting}[frame=single]
+if Messwert > Ueberstrom then UeberstromZeit++
+      else UeberstromZeit=0;
+      if( UeberstromZeit > Zeitlimit) then NotAus();
+\end{lstlisting}
+%
+%====================================================================================
+%
+\newpage
+\subsection{Verwendete Technologien und Entwicklungswerkzeuge}
+\subsubsection*{Software}
+\begin{itemize}
+\item Arduino IDE - Version 1.18.12
+\item Code OSS - Version 1.42.1
+\item GNU GCC - Version 9.2.1
+\item Texmaker - Version 5.0.4
+\item Firefox Browser - Version 74.0
+\item GNU GIMP - Version 2.10.18
+\item Libre Office Draw - Version 6.3.5.2
+\item Draw.io - Version 12.8.8
+\end{itemize}
+%
+\vspace{10mm}
+\subsubsection*{Hardware}
+%
+\paragraph{Arduino MEGA2560}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.25]{pics/arduinomega}
+	\caption{Arduino MEGA Klon der Firma Elegoo mit ATMega2560 Mikrocontroller}
+\end{figure}
+%
+\newpage
+\paragraph{AD633JN Analogmultiplizierer}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{pics_simps/ad633jn}
+	\caption{AD633JN Analogspannungsmultiplizierbaustein von Analog Devices}
+\end{figure}
+%
+\paragraph{MAX680CPA+ Ladungspumpe}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=1]{pics_simps/max680cpa}
+	\caption{MAX680CPA+ Ladungspumpe zum erzeugen der +-10V die der AD633JN Baustein benötigt}
+\end{figure}
+%
+\newpage
+\paragraph{Kern 440-51N Präzisionswaage}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.15]{pics_simps/440-51n}
+	\caption{Kern 440-51N Präzisionswaage}
+\end{figure}
+%
+\paragraph{Lichtschranke}\mbox{}\\
+Es wurde eine zu diesem Zeitpunkt unbekannte, generische Lichtschranke genutzt.
+%
+\paragraph{Raspberry Pi}\mbox{}\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.7]{pics/raspi}
+	\caption{Raspberry Pi 1 V1.2}
+\end{figure}
+%
+%====================================================================================
+%====================================================================================
+%
+\clearpage\vfill\newpage{}
+%====================================================================================
+\section{Erkl"arung der Eigenst"andigkeit der Arbeit}
+	\noindent\\[0mm] EIDESSTATTLICHE ERKLÄRUNG
+	\\[4mm]
+	\parbox{152mm}{
+	Ich erkläre an Eides statt, dass ich die vorliegende Arbeit selbständig und ohne
+	fremde Hilfe verfasst, andere als die angegebenen Quellen und Hilfsmittel nicht
+	benutzt und die den benutzten Quellen wörtlich und inhaltlich entnommenen
+	Stellen als solche erkenntlich gemacht habe. Meine Arbeit darf öffentlich
+	zugänglich gemacht werden, wenn kein Sperrvermerk vorliegt.
+	}
+	\\[19mm]\parbox{80mm}{
+		\rule{60mm}{.5pt}\\
+		\hspace*{3mm}Kappl, Datum
+	}
+	\parbox{80mm}{
+		\rule{70mm}{.5pt}\\
+		\hspace*{3mm}Simon Jehle
+	}
+		\\[19mm]\parbox{80mm}{
+		\rule{60mm}{.5pt}\\
+		\hspace*{3mm}Telfs, Datum
+	}
+	\parbox{80mm}{
+		\rule{70mm}{.5pt}\\
+		\hspace*{3mm}Patrick Krismer
+	}
+%	\\[19mm] \hspace*{3mm}\scalebox{1.7}{$\cdot\cdot\cdot$}
+
+%
+%====================================================================================
+%====================================================================================
+%
+\newpage
+\renewcommand{\thesection}{\Roman{section}\;}
+\setcounter{section}{0}
+%
+\section{Abbildungsverzeichnis}
+\vspace{-10mm}
+\listoffigures
+%	
+%====================================================================================	
+%	
+\section{Tabellenverzeichnis}
+\listoftables
+%
+%====================================================================================
+%
+\newpage
+\section*{Beispiel Literaturverzeichnis}
+%{\yhbu
+	{\fontsize{10pt}{10pt}\selectfont
+	(Übernommen aus dem Leitfaden des BMBF Reife- und Diplomprüfungen März 2014)
+	\\[0mm]
+	\begin{description*}
+	\item[1. Werke eines Autors] Nachname, Vorname: Titel. Untertitel. -
+		Verlagsort: Verlag, Jahr. Nachname,
+		Vorname: Titel. Untertitel. Auflage - Verlagsort: Verlag, Jahr.
+		\\[1mm]Beispiele:
+		\\Sandgruber, Roman: Bittersüße Genüsse. Kulturgeschichte der Genußmittel. – Wien:
+		Böhlau, 1986. Messmer, Hans-Peter: PC-Hardwarebuch. Aufbau, Funktionsweise,
+		Programmierung. Ein Handbuch nicht nur für Profis. 2. Aufl. - Bonn: Addison-Wesley,
+		1993.
+		\vspace*{2mm}
+	\item[2. Werke mehrerer Autoren] Nachname, Vorname; Nachname, Vorname; Nachname, Vorname: Titel.
+		Untertitel. Auflage - Verlagsort: Verlag, Jahr.
+		\\[1mm]Beispiel:
+		\\Bauer, Leonhard; Matis, Herbert: Geburt der Neuzeit. Vom Feudalsystem zur
+		Marktgesellschaft. - Mün- chen: Deutscher Taschenbuch Verlag, 1988.
+		\vspace*{2mm}
+	\item[3. Sammelwerke, Anthologien, CD-ROM mit Herausgeber] Nachname, Vorname (Herausgeber):
+		Titel. Untertitel. Auflage - Verlagsort: Verlag, Jahr. Nachname, Vorname: Titel.
+		Untertitel. In: Nachname, Vorname (Herausgeber): Titel. Untertitel. Auflage -
+		Verlagsort: Verlag, Jahr.
+		\\[1mm]Beispiele:
+		\\Popp, Georg (Hg.): Die Großen der Welt. Von Echnaton bis Gutenberg. 3. Aufl. -
+		Würzburg: Arena, 1979. Killik, John R.: Die industrielle Revolution in den Vereinigten
+		Staaten. In: Adams, Willi Paul (Hg.): Die Vereinigten Staaten von Amerika. Fischer
+		Weltgeschichte Bd. 30. - Frankfurt am Main: Fischer Taschenbuch Verlag, 1977. Killy,
+		Walther (Hg.): Literatur Lexikon. Autoren u. Werke deutscher Sprache. – München:
+		Bertelsmann, 1999. (Digitale Bibliothek, 2)
+		\vspace*{2mm}
+	\item[4. Mehrbändige Werke] Nachname, Vorname: Titel. Bd. 3 - Verlagsort: Verlag, Jahr.
+		\\[1mm]Beispiel:
+		\\Zenk, Andreas: Leitfaden für Novell NetWare. Grundlagen und Installation. Bd. 1 - Bonn:
+		Addison Wesley, 1990.
+		\vspace*{2mm}
+	\item[5. Beiträge in Fachzeitschriften, Zeitungen] Nachname, Vorname des Autors des bearbeiteten
+		Artikels: Titel des Artikels. In: Titel der Zeitschrift, Heftnummer, Jahrgang, Seite
+		(eventuell: Verlagsort, Verlag).
+		\\[1mm]Beispiel:
+		\\Beck, Josef: Vorbild Gehirn. Neuronale Netze in der Anwendung. In: Chip, Nr. 7, 1993,
+		Seite 26. - Würzburg: Vogel Verlag.
+		\vspace*{2mm}
+	\item[6. CD-ROM-Lexika]\hfill
+		\\[1mm]Beispiel:
+		\\Encarta 2000 - Microsoft 1999.
+		\vspace*{2mm}
+	\item[7. Internet] Nachname, Vorname des Autors: Titel. Online in Internet: URL: www-Adresse, Datum.
+		(Autor und Titel wenn vorhanden, Online in Internet: URL: www-Adresse, Datum auf
+		jeden Fall)
+		\\[1mm]Beispiel:
+		\\Ben Salah, Soia: Religiöser Fundamentalismus in Algerien. Online im Internet:
+		URL: >>http:/\slash{}www.hausarbeiten.de\slash{}cgi-bin\slash{}superRD.pl<<,
+		22.11.2000. Der Weg zur Doppelmonarchie.
+		Online in Internet: URL:
+		http:/\slash{}www.parlinkom.gv.at\slash{}pd\slash{}doep\slash{}d-k1-2.htm,
+		22.11.2000.
+		\vspace*{2mm}
+	\item[8. Firmenbroschüren, CD-ROM] Werden Inhalte von Firmenunterlagen verwendet,
+		dann ist ebenfalls die Quelle anzugeben.
+		\\[1mm]Beispiel:
+		\\Digitale Turbinenregler. Broschüre der Firma VOITH-HYDRO GmbH, 2012.
+		\vspace*{2mm}
+	\item[9. Abbildungen, Pläne] Werden Abbildungen aus einer fremden Quelle
+		[z.B. Download, Scannen) in die Diplomarbeit eingefügt,
+		so ist unmittelbar darunter die Quelle anzugeben.
+		\\[1mm]Beispiel:
+		\\Abb. 1: Digitaler Turbinenregler [ANDRITZ HYDRO]
+		\vspace*{2mm}
+	\item[10. Persönliche Mitteilungen]\hfill
+		\\[1mm]Beispiel:
+		\\Persönliche Mitteilung durch: König, Manfred:
+		Kössler GmbH Turbinenbau am 8. März 2013.
+	\end{description*}
+	}
+%	}%yhbu
+	%
+	%
+	%
+	%
+	%
+	%
+	%
+	%
+%
+%====================================================================================
+%
+\newpage
+\section{Literaturverzeichnis}
+	\begin{description*}
+{\footnotesize
+\subsection*{Datenblätter:}
+%	\item[1. Datenblätter:]
+	\item[\bf Bremsmotor]:\\
+		https://www.conrad.com/p/drive-system-europe-dc-gearmotor-dsmp320-12-0014-bf-192498-12-v-dc-053-a-008-nm-373-rpm-shaft-diameter-6-mm-1-pcs-192498\\
+		zuletzt abgerufen: 20.03.2020\\\\
+	\item[\bf MotoDriver2]:\\
+		https://www.conrad.at/de/p/entwickler-platine-sbc-motodriver2-arduino-banana-pi-cubieboard-pcduino-raspberry-pi-raspberry-pi-2-b-raspberry-1573541.html\\
+		zuletzt abgerufen: 20.03.2020\\\\
+	\item[CSV-Dateiformat]:\\
+		https://de.wikipedia.org/wiki/CSV\_(Dateiformat)\\
+		zuletzt abgerufen: 26 März 2020\\\\
+	\item[.]
+%
+\subsection*{Persönliche Mitteilungen:}
+		Persönliche Mitteilung durch: HTL-Lehrer XX XX: Begriff des Bremssattels am XX Februar 2020. \\\\
+%
+	\item[3.]:
+	\item[4.]:
+	
+\subsection*{Vorherige Diplomarbeit}
+\item[•]Mahlknecht Lukas und Schöffmann Manuel - 5AHWII (2016/17)\\
+}
+\end{description*}
+%
+%====================================================================================	
+%
+\newpage
+\section{Abk"urzungs- und Symbolverzeichnis}
+%	\vspace*{-6mm}\rotatebox{2}{\parbox{120mm}{\korr
+%	iXH h"atte doch gleich ein {\em\dq Glossar\dq} (Begriffserkl"arung) erstellt (nein???)[XH]}}	
+\begin{figure}[h!]
+Dipl. Ing. \dotfill Diplomingeneur \\
+etc. \dotfill etcetera\\
+zb. \dotfill zum Beispiel\\
+usw. \dotfill und so weiter\\
+u.w. \dotfill und weitere\\
+dt. \dotfill zu Deutsch\\
+Raspi \dotfill Raspberry Pi 3B\\
+Arduino \dotfill ArduinoMega2560\\
+\dotfill\\
+\end{figure}
+%
+%====================================================================================
+%====================================================================================
+%
+%\clearpage\vfill\newpage{}
+%====================================================================================
+%
+\renewcommand{\thesection}{\arabic{section}}
+\newpage
+\section{Anhang}
+%	\noindent\\[-2mm]
+%	\hspace*{3mm}{\sc\textbf{\Large Anhang}}
+%	\\[1mm]\hspace*{20mm}\parbox{100mm}{\korr
+%		iXH w"urde hier einen neuen Abschnitt (\tbs{}part\{Anhang\}) beginnen}
+	%\noindent\\[-5mm]
+	%
+	%
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{section}{1}
+\setcounter{subsection}{0}
+ \subsection{Pflichtenheft (optional)}
+	{\yhbu Zur Umsetzung des Projektzieles werden messbare Kriterien formuliert.}
+ \subsection{Schlussfolgerung / Projekterfahrung}
+	Krismer: Bin zu bled einfachste Sachen auf die Reihe zu bringen. \\
+	Krismer (über Jehle): Er kriegts hin. Isch a guater Mann. \\
+ \subsection{Projektterminplanung}
+	\noindent{\yhbu
+	Screenshots der MS Project-Datei. Die Ausgabe muss lesbar sein (eventuell auf
+	mehrere Bilder verteilen). Insbesondere ist darauf zu achten, dass die Zeitachse
+	und die Vorgangsachse auf jedem Bild sichtbar sind! Es muss nicht MS-Project
+	verwendet werden!
+	\\[2mm]
+	Projektbalkenplan (Gantt-Diagramm)
+	\\[2mm]
+	Excel
+	}
+%	
+%====================================================================================
+%
+\newpage
+ \subsection{Arbeitsnachweis Diplomarbeit}
+	\noindent{\yhbu
+	Dieser erfolgt durch ständige Aufzeichnungen der Schüler im Projekttagebuch.
+	\\[1mm]
+	Für jeden Projektmitarbeiter wird eine Tabelle gemäß Muster ausgefüllt. In dieser
+	Aufzeichnung werden auch die Unterrichtsprojektanteile, die in die Arbeit
+	eingeflossen sind \;
+	\scalebox{3}{\begin{picture}(0,0)\put(-1.6,0){\color{purple}\circle{4}}\end{picture}}
+	aufgezeigt.
+	}
+	\paragraph{\color{teal}\scriptsize Tabelle: Arbeitsaufstellung}\noindent\\[-3mm]
+	{\fontsize{9pt}{9pt}\selectfont
+	\\
+	\noindent
+	\begin{tabular}{|l|l|l|p{80mm}|l|}
+	\hline
+	\multicolumn{5}{|c|}{\parbox{4em}{\hfill\\[-0mm]\color{dkbu}Jehle}}	\\
+	\hline
+	Datum	&Uhrzeit	&\parbox{4em}{\hfill\\[-0mm]Stunden\\nn:nn\vspace*{1mm}}
+					&Beschreibung	&Betreuer	\\
+	\hline
+	01.11.2018	&08:00–11:30
+				& &Was wurde gemacht (eine Zeile!) &	\\
+	\hline
+	& & & &\\
+	\hline
+	& & & &\\
+	\hline
+	& & SUMME & &	\\
+	\hline
+	\end{tabular}
+%	
+%	
+	\vspace{10mm}
+	\begin{tabular}{|l|l|l|p{80mm}|l|}
+	\hline
+	\multicolumn{5}{|c|}{\parbox{4em}{\hfill\\[-0mm]\color{dkbu}Krismer}}	\\
+	\hline
+	Datum	&Uhrzeit	&\parbox{4em}{\hfill\\[-0mm]Stunden\\nn:nn\vspace*{1mm}}
+					&Beschreibung	&Betreuer	\\
+	\hline
+	01.11.2018	&08:00–11:30
+				& &Was wurde gemacht (eine Zeile!) &	\\
+	\hline
+	& & & &\\
+	\hline
+	& & & &\\
+	\hline
+	& & SUMME & &	\\
+	\hline
+	\end{tabular}
+	}
+
+ \subsection{Datenbl"atter (optional)}
+	\noindent{\yhbu
+	Meist sind die Datenblätter sehr umfangreich, daher werden im Anhang nur die
+	notwendigen Bereiche dargestellt, auf der CD wird das vollständige Datenblatt
+	gespeichert
+	}
+
+ \subsection{Technische Zeichnungen (optional)}
+	\noindent\\[10mm]
+	%
+	\noindent{\yhbu
+	{\bf Abzugeben sind:}
+	\xilist{}{4}{-2}{1}{0}{
+	\item[1] gebundene Dokumentationen mit Deckblatt (Format: A4) – für die Bibliothek
+		(die HTL Bindung ist zu verwenden!!)
+	\item[1] Korrekturversion (Form und Aussehen mit Projektbetreuer vereinbaren)
+	\item[1] Version für die Firma (optional -- mit Betreuer vereinbaren)
+	\item[2] CDs mit allen Unterlagen (Word, Bilder, Code...)
+	}
+	}
+%	
+%====================================================================================
+%====================================================================================
+%
+\label{LastPage}
+%\addtocontents{toc}{\protect\end{multicols}}
+\end{document}
