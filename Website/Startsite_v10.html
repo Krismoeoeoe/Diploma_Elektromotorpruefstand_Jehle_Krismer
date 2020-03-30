@@ -1,0 +1,386 @@
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
+<!--Website 
+    Author: 7LPP
+    Date: 05.03.2020
+    https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer
+
+    Sources:
+02mar   https://coolors.co/ffae75-b9f248-6600cc-e6e6ea-f4f4f8
+        https://brightside.me/article/the-ultimate-color-combinations-cheat-sheet-92405/
+        https://www.w3schools.com/cssref/css_websafe_fonts.asp   
+        https://www.w3schools.com/csS/css_positioning.asp
+        
+        https://stackoverflow.com/questions/18340057/how-to-display-two-buttons-beside-each-other
+        https://www.w3schools.com/howto/howto_css_button_group.asp
+
+        https://www.w3schools.com/CSSref/css3_pr_background-clip.asp
+
+        https://www.w3schools.com/cssref/pr_tab_table-layout.asp
+        https://www.w3schools.com/Css/tryit.asp?filename=trycss_ex_images_thumbnail_link
+
+        https://www.w3schools.com/Tags/att_img_align.asp
+        https://www.w3schools.com/css/css_float.asp
+        https://www.w3schools.com/Css/css_boxmodel.asp
+        https://www.mediaevent.de/tutorial/css-position-absolute-relative.html
+
+05mar   https://www.w3schools.com/tags/tag_table.asp
+        https://www.w3schools.com/tags/att_a_target.asp
+
+06mar   http://html5doctor.com/element-index/#figure
+
+08mar   http://html5doctor.com/element-index/#style
+        https://wiki.selfhtml.org/wiki/HTML/Skripte/script
+
+10mar
+        https://css-tricks.com/scroll-fix-content/
+
+
+    Image Sources:
+        https://github.com/logos
+        https://www.cleanpng.com/png-house-computer-icons-home-building-4896919/   
+        https://www.cleanpng.com/png-computer-icons-info-email-1975299/
+
+bottom color: #4c0099
+    -->
+<!------------------------------------------------------------------------------------>
+<!DOCTYPE html>
+<!------------------------------------------------------------------------------------>
+<!--html, body{
+    margin: 0;
+}-->
+<style>
+    body{
+    background-image: url('pics/blue_lightblue_gradient.png');
+    background-size: 100%;
+    }
+
+.heading1{
+    background-color: #0017be;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    font-size: 40px;
+    text-align: center; 
+    padding: 25px; 
+    margin: -8px;
+    }
+
+.heading3{
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    }
+
+.thanks{
+    background-color: #0017be;
+    border: 4px solid #f9b516;
+    margin: 0 130px 0 130px;
+    padding: 10px 0 10px 0;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+}
+
+.btn-group{
+    width: 80%;
+    margin-left: 150px;
+    }
+
+.button_line1{
+    background-color: #d34423;
+    border-radius: 10px;
+    border-color: white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 30px 10px 30px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    }
+.button_line2{
+    background-color: #d34423;
+    border-radius: 10px;
+    border-color: white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 215px 10px 30px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    }
+
+.button_grey {
+    background-color: #aeaeb2;
+    border-radius: 6px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    }
+
+.button_line1:hover {
+    background-color: #6600cc;
+    color: white;
+    }
+.button_line2:hover {
+    background-color: #6600cc;
+    color: white;
+    }
+
+.home{
+    border: 4px solid #f9b516;
+    border-radius: 50px;
+    position: fixed;
+    float: 10px;
+    width: 60px;
+    padding: 5px;
+    margin-left: 5px;
+    }
+
+.hometext{
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    padding-left: 10px;
+    }
+.imagehome{
+    position: relative;
+    float: left;
+    width: 50px;
+    transition-duration: 0.4s;
+    padding: 8px 0px 0px 5px;
+    }
+.home:hover{
+    opacity: 0.75;
+    }
+
+table{
+    background-color: #0017be;
+    color: #f9b516;
+    border-collapse: collapse;
+    border: 4px solid #f9b516;
+    width: 20%;
+    font-family: Arial Black, sans-serif;
+    margin: 60px 0 0 30px;
+    }
+
+th,td {
+    border: 2px solid #f9b516;
+    }
+
+#table11{}
+#table12{}
+#table13{}
+
+#table21{}
+#table22{}
+#table23{}
+
+#table31{}
+#table32{}
+#table33{}
+
+#table41{}
+#table42{}
+#table43{}
+
+#table51{}
+#table52{}
+#table53{}
+
+#table61{}
+#table62{}
+#table63{}
+
+#table71{}
+#table72{}
+#table73{}
+
+#table81{}
+#table82{}
+#table83{}
+
+#table91{}
+#table92{}
+#table93{}
+
+#table101{}
+#table102{}
+#table103{}
+
+.footer{
+    background-color: #0017be;
+    color: #f9b516;
+    font-family: Arial Black, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: -8px;
+    }
+
+.imagegit{
+    position: relative;
+    float: right;
+    width: 60px;
+    transition-duration: 0.4s;
+    }
+.imagegit:hover{
+    opacity: 0.5;
+    }
+
+</style>
+<!------------------------------------------------------------------------------------>
+<script>
+function button_start(){
+}
+</script>
+<!------------------------------------------------------------------------------------>
+<header>
+    <title>The Answer is 42</title>
+        <h1 class="heading1"><u>Steuerung des Elektromotor-Prüfstandes</u></h1>
+        <br>
+            <figure class="home">
+                <a target="_self" href="file:///home/patrick/Desktop/school/Diplomarbeit/MS4_Automatisierung/Website_plus_Instruction/Instruction_v10.html">
+                <img src="pics/yellow_info_f9b516_v03.png" class="imagehome" >
+                <h3 class="hometext"> Info </h3>
+                </a>
+            </figur>
+</header>
+<!------------------------------------------------------------------------------------>
+    <body>
+        <br>
+      
+        <h3 class="thanks"> <-- Bitte informieren Sie sich zuerst auf der "Info-Seite" bevor Sie den Messvorgangs starten. </h3>
+      
+        <br><br><br>
+        
+        <form action="/action_page.php">
+            <div class="btn-group">                                <!--put buttons beside each other-->
+                <button style="width: 10%" class="button_line1" onclick="return false;"> Start </button>
+                <button style="width: 21%" class="button_line1" onclick="return false;"> Start [Free-control] </button>
+                <button style="width: 10%" class="button_line1" onclick="return false;"> Halte </button>
+                
+            </div>
+
+<!--        <div class="button_grey">
+                hometext
+            </div>
+-->
+
+            <br><br>
+
+            <div class="btn-group">                                <!--put buttons beside each other-->
+                <button style="width: 20%" class="button_line2" onclick="return false;"> Zeige Messwerte </button> 
+<!--            <button style="width: 20%" class="button_line2" onclick="return false;"> Zeige Diagramm </button> -->
+                <button style="width: 25%" class="button_line2" onclick="return false;"> Prüfstand abschalten </button>
+
+
+                    <table class="table" cellpadding="14" >
+                        <tr>
+                            <th>Messung Nummer</th>
+                            <th>Drehzahl [rpm]</th>
+                            <th>Belastungsstufe [%]</th>
+                            <th>Wirkungsgrad</th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 1</th>
+                            <th id="table11" ></th>
+                            <th id="table12" ></th>
+                            <th id="table13" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 2</th>
+                            <th id="table21" ></th>
+                            <th id="table22" ></th>
+                            <th id="table23" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 3</th>
+                            <th id="table31" ></th>
+                            <th id="table32" ></th>
+                            <th id="table33" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 4</th>
+                            <th id="table41" ></th>
+                            <th id="table42" ></th>
+                            <th id="table43" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 5</th>
+                            <th id="table51" ></th>
+                            <th id="table52" ></th>
+                            <th id="table53" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 6</th>
+                            <th id="table61" ></th>
+                            <th id="table62" ></th>
+                            <th id="table63" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 7</th>
+                            <th id="table71" ></th>
+                            <th id="table72" ></th>
+                            <th id="table73" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 8</th>
+                            <th id="table81" ></th>
+                            <th id="table82" ></th>
+                            <th id="table83" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 9</th>
+                            <th id="table91" ></th>
+                            <th id="table92" ></th>
+                            <th id="table93" ></th>
+                        </tr>
+
+                        <tr>
+                            <th> Nr. 10</th>
+                            <th id="table101" ></th>
+                            <th id="table102" ></th>
+                            <th id="table103" ></th>
+                        </tr>
+                    </table>
+
+
+
+            </div>
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+        </form>
+<!------------------------------------------------------------------------------------>
+            <div class="footer">
+                <p><u>Impressum:</u>
+                    <a target="_blank" href="https://github.com/Krismoeoeoe/Diploma_Elektromotorpruefstand_Jehle_Krismer">
+                    <img src="pics/GitHub-120px.png" class="imagegit" alt="Github-Repository">
+                    </a>
+                <br>
+                <u>Authors:</u> thetoastiestbread and Krismoeoeoe <br>
+                <u>Usage:</u> Elektromotor-Prüfstand (C.Fischer , HTLinn)</p> 
+            </div>
+
+    </body>
+<!------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------>
